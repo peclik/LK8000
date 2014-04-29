@@ -10,6 +10,7 @@
 #include <ctype.h> // needed for Wine
 #include "Topology.h"
 #include "Multimap.h"
+#include "utils/stringext.h"
 
 
 XShape::XShape() {
@@ -885,11 +886,11 @@ void XShapeLabel::setlabel(const char* src) {
       label= NULL;
   }
   
-  int nChars = MultiByteToWideChar(CP_ACP, 0, src, -1, NULL, 0);
+  int nChars = 100;
   if(nChars) {
     label = (TCHAR*)malloc(nChars*sizeof(TCHAR));
     if(label) {
-        MultiByteToWideChar(CP_ACP, 0, src, -1, label, nChars);
+        utf2unicode(src, label, nChars);
     }
   }
   hide=false;
